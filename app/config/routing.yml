@@ -1,0 +1,5 @@
+j_hodges_loud_surf:
+    resource: "@JHodgesLoudSurfBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
