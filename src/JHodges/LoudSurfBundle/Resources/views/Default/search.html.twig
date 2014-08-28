@@ -1,0 +1,12 @@
+{% include 'JHodgesLoudSurfBundle:Default:_search.html.twig' with {q:''} %}
+<ul>
+	{% for song in results %}
+		<li>
+			<a href="{{url('artist', {id: song.artist_id})}}">
+				{{song.artist_name}}
+			</a>
+			-
+			{{ song.title }}
+		</li>
+	{% endfor %}
+</ul>
