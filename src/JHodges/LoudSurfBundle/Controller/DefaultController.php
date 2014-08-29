@@ -53,15 +53,12 @@ class DefaultController extends Controller{
 
         Echonest::configure('9OYJYBGLH5TXOFNTV');
 
-        $profile = Echonest::query('artist', 'profile', array(
-            'id' => $id
-        ));
-        $bio = Echonest::query('artist', 'biographies', array(
-            'id' => $id
+        $results = Echonest::query('artist', 'profile', array(
+            'id' => $id,
+            'bucket'=>array('biographies','blogs','discovery','discovery_rank','doc_counts','familiarity','familiarity_rank','genre','hotttnesss','hotttnesss_rank','images','artist_location','news','reviews','songs','terms','urls','video','years_active')
         ));
         return array(
-            'profile'=>$profile->response->artist,
-            'bios'=>$bio->response->biographies
+            'artist'=>$results->response->artist,
         );
     }
 
@@ -74,10 +71,11 @@ class DefaultController extends Controller{
         Echonest::configure('9OYJYBGLH5TXOFNTV');
 
         $results = Echonest::query('song', 'profile', array(
-            'id' => $id
+            'id' => $id,
+            'bucket'=>array('audio_summary','artist_discovery','artist_discovery_rank','artist_familiarity','artist_familiarity_rank','artist_hotttnesss','artist_hotttnesss_rank','artist_location','song_currency','song_currency_rank','song_hotttnesss','song_hotttnesss_rank','song_type')
         ));
 
-        return array('song'=>$results);
+        return array('song'=>$results->response->songs[0]);
     }
 
 

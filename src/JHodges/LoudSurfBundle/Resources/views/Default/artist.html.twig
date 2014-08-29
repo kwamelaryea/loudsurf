@@ -1,9 +1,2 @@
-<h1>{{profile.name}}</h1>
-
-{% for bio in bios %}
-	<p>
-		{{bio.text|nl2br}}
-		<br/>
-		<a href="{{bio.url}}">{{bio.url}}</a>
-	</p>
-{% endfor %}
+<h1>{{artist.name}}</h1>
+{{dump(artist)}}

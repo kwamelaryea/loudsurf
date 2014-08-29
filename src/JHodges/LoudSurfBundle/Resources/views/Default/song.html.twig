@@ -1,1 +1,7 @@
+<h1>
+	{{song.title}} by 
+	<a href="{{url('song', {id: song.artist_id})}}">
+		{{song.artist_name}}
+	</a>
+</h1>
 {{dump(song)}}

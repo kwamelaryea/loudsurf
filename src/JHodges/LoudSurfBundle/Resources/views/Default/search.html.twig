@@ -6,7 +6,9 @@
 				{{song.artist_name}}
 			</a>
 			-
-			{{ song.title }}
+			<a href="{{url('song', {id: song.id})}}">
+				{{song.title}}
+			</a>
 		</li>
 	{% endfor %}
 </ul>
