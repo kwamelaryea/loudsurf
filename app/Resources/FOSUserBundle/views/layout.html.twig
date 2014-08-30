@@ -1,6 +1,5 @@
 {% extends 'JHodgesLoudSurfBundle::layout.html.twig' %}
 
 {% block body %}
-	<h1>{{artist.name}}</h1>
-	{{dump(artist)}}
+    {% block fos_user_content %}{% endblock %}
 {% endblock %}

@@ -1,9 +1,22 @@
 {% extends '::base.html.twig' %}
 
+{% block header %}
+	<h1>Loudsurf</h1>
+	<p>
+	    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+	        <a href="{{ path('fos_user_security_logout') }}">
+	            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+	        </a>
+	    {% else %}
+	        <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+	        |
+	        <a href="{{ path('fos_user_registration_register') }}">Register</a>
+	    {% endif %}	
+	</p>
+	{% include 'JHodgesLoudSurfBundle:Default:_search.html.twig' with {q:''} %}
+{% endblock %}
+
 {% block body %}
-
-<header>
-	global header stuff
-</header>
-
-{% end block %}
+	<p>Welcome to the testing grounds :D</p>
+{% endblock %}

@@ -5,9 +5,26 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <style>
+            header{
+                padding:25px;
+                background: #888;
+            }
+            #main{
+                padding:25px;
+            }
+            #main input{
+                display:block;
+            }
+        </style>
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <header>
+            {% block header %}{% endblock %}
+        </header>
+        <div id="main">
+            {% block body %}{% endblock %}
+            {% block javascripts %}{% endblock %}
+        </div>
     </body>
 </html>

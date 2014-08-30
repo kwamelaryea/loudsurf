@@ -1,14 +1,17 @@
-{% include 'JHodgesLoudSurfBundle:Default:_search.html.twig' with {q:''} %}
-<ul>
-	{% for song in results %}
-		<li>
-			<a href="{{url('artist', {id: song.artist_id})}}">
-				{{song.artist_name}}
-			</a>
-			-
-			<a href="{{url('song', {id: song.id})}}">
-				{{song.title}}
-			</a>
-		</li>
-	{% endfor %}
-</ul>
+{% extends 'JHodgesLoudSurfBundle::layout.html.twig' %}
+
+{% block body %}
+	<ul>
+		{% for song in results %}
+			<li>
+				<a href="{{url('artist', {id: song.artist_id})}}">
+					{{song.artist_name}}
+				</a>
+				-
+				<a href="{{url('song', {id: song.id})}}">
+					{{song.title}}
+				</a>
+			</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
