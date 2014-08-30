@@ -1,0 +1,9 @@
+{% extends 'JHodgesLoudSurfBundle::layout.html.twig' %}
+
+{% block body %}
+	<ul>
+		{% for song in favSongs %}
+			<li>{{song.name}}</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
