@@ -3,12 +3,20 @@
 {% block body %}
 	<h1>
 		{{song.title}} by 
-		<a href="{{url('song', {id: song.artist_id})}}">
+		<a href="{{url('artist', {id: song.artist_id})}}">
 			{{song.artist_name}}
 		</a>
 	</h1>
 	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 		<a href="{{url('add_fav',{id:song.id,name:song.artist_name~': '~song.title})}}">Add Fav</a>
 	{% endif %}
+
+	{% for track in song.tracks %}
+		<img src="{{track.release_image}}"/>
+		<a href="{{track.preview_url}}">play</a>
+		<br/>
+	{% endfor %}
+
+	<hr/>
 	{{dump(song)}}
 {% endblock %}

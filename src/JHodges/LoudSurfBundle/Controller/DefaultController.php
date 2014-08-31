@@ -18,6 +18,17 @@ Your Consumer Key: 63e0eee012643e7e26ed7754d28803d0
 Your Shared Secret: J2zIhoy9QxGL6yST3AiqoA
 */
 
+/*
+7Digital
+oauth_consumer_key=7deehdf7wtbe
+oauth_consumer_secret=qx9mu9dmu7ent5f4
+
+To give you a quick start here's an example API request with your key:
+http://api.7digital.com/1.2/release/details?releaseid=951886&country=gb&oauth_consumer_key=7deehdf7wtbe
+
+Your affiliate partner ID is: 8340
+*/
+
 
 class DefaultController extends Controller{
     /**
@@ -39,7 +50,8 @@ class DefaultController extends Controller{
 		Echonest::configure('9OYJYBGLH5TXOFNTV');
 
 		$results = Echonest::query('song', 'search', array(
-		    'combined' => $q
+		    'combined' => $q,
+            'bucket'=>array('id:7digital-US','audio_summary','tracks')
 		));
 
         return array('results'=>$results->response->songs);
@@ -70,12 +82,14 @@ class DefaultController extends Controller{
 
         Echonest::configure('9OYJYBGLH5TXOFNTV');
 
-        $results = Echonest::query('song', 'profile', array(
+        $song = Echonest::query('song', 'profile', array(
             'id' => $id,
-            'bucket'=>array('audio_summary','artist_discovery','artist_discovery_rank','artist_familiarity','artist_familiarity_rank','artist_hotttnesss','artist_hotttnesss_rank','artist_location','song_currency','song_currency_rank','song_hotttnesss','song_hotttnesss_rank','song_type')
+            'bucket'=>array('audio_summary','artist_discovery','artist_discovery_rank','artist_familiarity','artist_familiarity_rank','artist_hotttnesss','artist_hotttnesss_rank','artist_location','song_currency','song_currency_rank','song_hotttnesss','song_hotttnesss_rank','song_type','id:7digital-US','tracks')
         ));
 
-        return array('song'=>$results->response->songs[0]);
+        return array(
+            'song'=>$song->response->songs[0]
+        );
     }
 
 
