@@ -72,5 +72,40 @@ class DefaultController extends Controller{
         );
     }
 
+    /**
+     * @Route("/test/", name="test")
+     * @Template()
+     */
+    public function testAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT u
+            FROM JHodgesLoudSurfBundle:User u
+        ');
+        $users = $query->getResult();
+
+        $rank=array();
+
+        foreach($users as $user){
+            foreach($user->getFavSongs() as $song){
+                $data=$song->getData();
+                if($data){
+                    foreach($data['response']['songs'][0]['song_type'] as $type){
+                        if( isset($rank[$user->getId()][$type]) ){
+                            $rank[$user->getId()][$type]++;
+                        }else{
+                            $rank[$user->getId()][$type]=1;
+                        }
+                    }
+                }
+            }
+        }
+
+        return array(
+            'users'=>$users,
+            'rank'=>$rank
+        );
+    }
+
 
 }

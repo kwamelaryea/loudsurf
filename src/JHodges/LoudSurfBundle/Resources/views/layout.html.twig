@@ -5,13 +5,15 @@
 	<p>
 	    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 	        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-	        <a href="{{ path('fos_user_security_logout') }}">
-	            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-	        </a>
+	        <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+	        |
+	        <a href="{{ path('test') }}">Algo Test</a>
 	    {% else %}
 	        <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
 	        |
 	        <a href="{{ path('fos_user_registration_register') }}">Register</a>
+	        |
+	        <a href="{{ path('fos_user_resetting_request') }}">Reset Passowrd</a>
 	    {% endif %}	
 	</p>
 	{% include 'JHodgesLoudSurfBundle:Default:_search.html.twig' with {q:''} %}

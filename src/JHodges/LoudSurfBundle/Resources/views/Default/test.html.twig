@@ -1,0 +1,20 @@
+{% extends 'JHodgesLoudSurfBundle::layout.html.twig' %}
+
+{% block body %}
+
+	<h1>Algorithm Test</h1>
+
+	{% for user in users %}
+		<h2>{{user.username}}</h2>
+		{% for song in user.favsongs %}
+			{{song.name}}<br/>
+		{% endfor %}
+		{% if rank[user.id] is defined %}
+			<hr/>
+			{% for name,rank in rank[user.id] %}
+				{{name}}:{{rank}}<br/>
+			{% endfor %}
+		{% endif %}
+	{% endfor %}
+
+{% endblock %}
