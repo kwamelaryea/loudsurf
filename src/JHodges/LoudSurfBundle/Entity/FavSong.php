@@ -36,7 +36,7 @@ class FavSong
     private $songID;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="fav_songs")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="favSongs")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;

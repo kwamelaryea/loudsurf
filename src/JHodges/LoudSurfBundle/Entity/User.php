@@ -18,9 +18,15 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="FavSong", mappedBy="user")
+     */
+    protected $favSongs;
+
     public function __construct()
     {
         parent::__construct();
+        $this->favSongs = new ArrayCollection();
         // your own logic
     }
 
@@ -32,5 +38,38 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Add favSongs
+     *
+     * @param \JHodges\LoudSurfBundle\Entity\FavSong $favSongs
+     * @return User
+     */
+    public function addFavSong(\JHodges\LoudSurfBundle\Entity\FavSong $favSongs)
+    {
+        $this->favSongs[] = $favSongs;
+
+        return $this;
+    }
+
+    /**
+     * Remove favSongs
+     *
+     * @param \JHodges\LoudSurfBundle\Entity\FavSong $favSongs
+     */
+    public function removeFavSong(\JHodges\LoudSurfBundle\Entity\FavSong $favSongs)
+    {
+        $this->favSongs->removeElement($favSongs);
+    }
+
+    /**
+     * Get favSongs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFavSongs()
+    {
+        return $this->favSongs;
     }
 }
