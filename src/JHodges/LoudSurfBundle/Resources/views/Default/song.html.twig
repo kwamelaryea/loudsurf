@@ -8,7 +8,7 @@
 		</a>
 	</h1>
 	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-		<a href="{{url('add_fav',{id:song.id,name:song.artist_name~': '~song.title})}}">Add Fav</a>
+		<p><a href="{{url('add_fav',{id:song.id,name:song.artist_name~': '~song.title})}}">Add Fav</a></p>
 	{% endif %}
 
 	{% for track in song.tracks %}

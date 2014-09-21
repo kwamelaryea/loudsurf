@@ -3,7 +3,9 @@
 {% block body %}
 	<ul>
 		{% for song in favSongs %}
-			<li>{{song.name}}</li>
+			<li>{{song.name}} (<a href="{{url('delete_fav',{id:song.id})}}">delete</a>)</li>
+		{% else %}
+			<p>No favs yet.</p>
 		{% endfor %}
 	</ul>
 {% endblock %}
