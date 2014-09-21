@@ -17,4 +17,12 @@
         </service>
     </services>
     -->
+
+    <services>
+        <service id="jhodges.echonest" class="JHodges\LoudSurfBundle\Service\EchoNestManager">
+            <argument>%echonest.api_key%</argument>
+        </service>
+    </services>
+
+
 </container>
