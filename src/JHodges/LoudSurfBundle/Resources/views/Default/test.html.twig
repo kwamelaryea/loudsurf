@@ -7,7 +7,7 @@
 	{% for user in users %}
 		<h2>{{user.username}}</h2>
 		{% for song in user.favsongs %}
-			{{song.name}}<br/>
+			<a href="{{url('song',{id:song.songId})}}">{{song.name}}</a><br/>
 		{% endfor %}
 		{% if rank[user.id] is defined %}
 			<hr/>
