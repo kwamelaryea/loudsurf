@@ -16,11 +16,14 @@ class EchoNestManager{
         $id=$name.'.'.$method.'.'.md5(print_r($data,true));
         if($this->cache->contains($id)){
             return $this->cache->fetch($id);
-        }else{
-            $result=Echonest::query($name,$method,$data);
-            $this->cache->save($id,$result);
-            return $result;
         }
+
+        $result=Echonest::query($name,$method,$data);
+        if($result->response->status->message!='Success'){
+            die('UNGRACEFUL API ERROR: '.$result->response->status->message);
+        }
+        $this->cache->save($id,$result);
+        return $result;
     }
 
     public function getSongProfile($id){
