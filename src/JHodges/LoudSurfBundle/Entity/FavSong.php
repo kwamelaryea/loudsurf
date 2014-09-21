@@ -42,6 +42,13 @@ class FavSong
     protected $user;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="data", type="json_array")
+     */
+    private $data;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -118,5 +125,28 @@ class FavSong
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set data
+     *
+     * @param array $data
+     * @return FavSong
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+
+        return $this;
+    }
+
+    /**
+     * Get data
+     *
+     * @return array 
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 }
