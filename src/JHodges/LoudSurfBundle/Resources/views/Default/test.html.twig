@@ -10,7 +10,6 @@
 			<a href="{{url('song',{id:song.songId})}}">{{song.name}}</a><br/>
 		{% endfor %}
 		{% if rank[user.id] is defined %}
-			<hr/>
 			{% for name,rank in rank[user.id] %}
 				{{name}}:{{rank}}<br/>
 			{% endfor %}
