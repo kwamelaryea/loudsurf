@@ -45,12 +45,8 @@ class DefaultController extends Controller{
 
         $en=$this->get('jhodges.echonest');
 
-        $results = $en->query('artist', 'profile', array(
-            'id' => $id,
-            'bucket'=>array('biographies','blogs','discovery','discovery_rank','doc_counts','familiarity','familiarity_rank','genre','hotttnesss','hotttnesss_rank','images','artist_location','news','reviews','songs','terms','urls','video','years_active')
-        ));
         return array(
-            'artist'=>$results->response->artist,
+            'artist'=>$en->getArtistProfile($id)
         );
     }
 
@@ -62,13 +58,8 @@ class DefaultController extends Controller{
 
         $en=$this->get('jhodges.echonest');
 
-        $song = $en->query('song', 'profile', array(
-            'id' => $id,
-            'bucket'=>array('audio_summary','artist_discovery','artist_discovery_rank','artist_familiarity','artist_familiarity_rank','artist_hotttnesss','artist_hotttnesss_rank','artist_location','song_currency','song_currency_rank','song_hotttnesss','song_hotttnesss_rank','song_type','id:7digital-US','tracks')
-        ));
-
         return array(
-            'song'=>$song->response->songs[0]
+            'song'=>$en->getSongProfile($id)
         );
     }
 
@@ -86,15 +77,20 @@ class DefaultController extends Controller{
 
         $rank=array();
 
+        $en=$this->get('jhodges.echonest');
+
         foreach($users as $user){
             foreach($user->getFavSongs() as $song){
-                $data=$song->getData();
-                if($data){
-                    foreach($data['response']['songs'][0]['song_type'] as $type){
-                        if( isset($rank[$user->getId()][$type]) ){
-                            $rank[$user->getId()][$type]++;
-                        }else{
-                            $rank[$user->getId()][$type]=1;
+                $songProfile=$en->getSongProfile($song->getSongId());
+                if($songProfile){
+                    $artistProfile=$en->getArtistProfile($songProfile->artist_id);
+                    if($artistProfile){
+                        foreach($artistProfile->genres as $genre){
+                            if( isset($rank[$user->getId()][$genre->name]) ){
+                                $rank[$user->getId()][$genre->name]++;
+                            }else{
+                                $rank[$user->getId()][$genre->name]=1;
+                            }
                         }
                     }
                 }

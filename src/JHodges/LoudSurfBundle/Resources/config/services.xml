@@ -20,6 +20,7 @@
 
     <services>
         <service id="jhodges.echonest" class="JHodges\LoudSurfBundle\Service\EchoNestManager">
+            <argument type="service" id="winzou_cache.file" />            
             <argument>%echonest.api_key%</argument>
         </service>
     </services>
