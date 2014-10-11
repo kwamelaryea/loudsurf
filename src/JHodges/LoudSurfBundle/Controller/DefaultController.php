@@ -96,13 +96,16 @@ class DefaultController extends Controller{
                     }
                 }
             }
+            if(isset($rank[$user->getId()])){
+                arsort($rank[$user->getId()]);
+            }
         }
 
         //compare each user to every other user
         $match=array();
         foreach($users as $user1){
             foreach($users as $user2){
-                if(isset($rank[$user1->getId()]) && isset($rank[$user2->getId()])){
+                if( ($user1->getId()!=$user2->getId()) && isset($rank[$user1->getId()]) && isset($rank[$user2->getId()])){
                     foreach($rank[$user1->getId()] as $k=>$v){
                         if( isset( $rank[$user2->getId()][$k] ) ){
                             $score=min($rank[$user2->getId()][$k] , $rank[$user1->getId()][$k]);
@@ -114,6 +117,9 @@ class DefaultController extends Controller{
                         }
                     }
                 }
+            }
+            if(isset($match[$user1->getId()])){
+                arsort($match[$user1->getId()]);
             }
         }
 
