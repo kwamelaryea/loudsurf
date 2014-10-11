@@ -117,8 +117,6 @@ class DefaultController extends Controller{
             }
         }
 
-        print_r($match);
-
         return array(
             'users'=>$users,
             'rank'=>$rank,
