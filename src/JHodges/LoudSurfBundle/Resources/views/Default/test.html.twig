@@ -11,9 +11,14 @@
 		{% endfor %}
 		{% if rank[user.id] is defined %}
 			{% for name,rank in rank[user.id] %}
-				{{name}}:{{rank}}<br/>
+				RANK: {{name}}:{{rank}}<br/>
 			{% endfor %}
 		{% endif %}
+		{% if match[user.id] is defined %}
+			{% for name,score in match[user.id] %}
+				MATCH: {{name}}:{{score}}<br/>
+			{% endfor %}
+		{% endif %}		
 	{% endfor %}
 
 {% endblock %}

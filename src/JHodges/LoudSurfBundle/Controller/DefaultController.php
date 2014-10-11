@@ -79,6 +79,7 @@ class DefaultController extends Controller{
 
         $en=$this->get('jhodges.echonest');
 
+        //calc rankings for genras of each user
         foreach($users as $user){
             foreach($user->getFavSongs() as $song){
                 $songProfile=$en->getSongProfile($song->getSongId());
@@ -97,9 +98,31 @@ class DefaultController extends Controller{
             }
         }
 
+        //compare each user to every other user
+        $match=array();
+        foreach($users as $user1){
+            foreach($users as $user2){
+                if(isset($rank[$user1->getId()]) && isset($rank[$user2->getId()])){
+                    foreach($rank[$user1->getId()] as $k=>$v){
+                        if( isset( $rank[$user2->getId()][$k] ) ){
+                            $score=min($rank[$user2->getId()][$k] , $rank[$user1->getId()][$k]);
+                            if(isset($match[$user1->getId()][$user2->getUsername()])){
+                                $match[$user1->getId()][$user2->getUsername()]+=$score;
+                            }else{
+                                $match[$user1->getId()][$user2->getUsername()]=$score;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        print_r($match);
+
         return array(
             'users'=>$users,
-            'rank'=>$rank
+            'rank'=>$rank,
+            'match'=>$match
         );
     }
 
