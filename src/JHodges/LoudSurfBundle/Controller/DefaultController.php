@@ -64,10 +64,10 @@ class DefaultController extends Controller{
     }
 
     /**
-     * @Route("/test/", name="test")
+     * @Route("/recalc/", name="recalc")
      * @Template()
      */
-    public function testAction(Request $request){
+    public function recalcAction(Request $request){
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
             'SELECT u
@@ -75,59 +75,16 @@ class DefaultController extends Controller{
         ');
         $users = $query->getResult();
 
-        $rank=array();
-
-        $en=$this->get('jhodges.echonest');
-
-        //calc rankings for genras of each user
+        //recalculate rankings
         foreach($users as $user){
-            foreach($user->getFavSongs() as $song){
-                $songProfile=$en->getSongProfile($song->getSongId());
-                if($songProfile){
-                    $artistProfile=$en->getArtistProfile($songProfile->artist_id);
-                    if($artistProfile){
-                        foreach($artistProfile->genres as $genre){
-                            if( isset($rank[$user->getId()][$genre->name]) ){
-                                $rank[$user->getId()][$genre->name]++;
-                            }else{
-                                $rank[$user->getId()][$genre->name]=1;
-                            }
-                        }
-                    }
-                }
-            }
-            if(isset($rank[$user->getId()])){
-                arsort($rank[$user->getId()]);
-            }
+            $this->get('jhodges.loudsurf.algorithm')->calculateGenraRankings($user);
+            $this->get('jhodges.loudsurf.algorithm')->calculateUserMatches($user);
+            $em->persist($user);
         }
 
-        //compare each user to every other user
-        $match=array();
-        foreach($users as $user1){
-            foreach($users as $user2){
-                if( ($user1->getId()!=$user2->getId()) && isset($rank[$user1->getId()]) && isset($rank[$user2->getId()])){
-                    foreach($rank[$user1->getId()] as $k=>$v){
-                        if( isset( $rank[$user2->getId()][$k] ) ){
-                            $score=min($rank[$user2->getId()][$k] , $rank[$user1->getId()][$k]);
-                            if(isset($match[$user1->getId()][$user2->getUsername()])){
-                                $match[$user1->getId()][$user2->getUsername()]+=$score;
-                            }else{
-                                $match[$user1->getId()][$user2->getUsername()]=$score;
-                            }
-                        }
-                    }
-                }
-            }
-            if(isset($match[$user1->getId()])){
-                arsort($match[$user1->getId()]);
-            }
-        }
+        $em->flush();
 
-        return array(
-            'users'=>$users,
-            'rank'=>$rank,
-            'match'=>$match
-        );
+        die("DONE");
     }
 
 

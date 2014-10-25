@@ -1,0 +1,18 @@
+{% extends 'JHodgesLoudSurfBundle::layout.html.twig' %}
+
+{% block body %}
+
+	<h2>{{user.username}}</h2>
+	{% for song in user.favsongs %}
+		<a href="{{url('song',{id:song.songId})}}">{{song.name}}</a><br/>
+	{% endfor %}
+
+	{% for name,score in user.userMatches %}
+		<strong style="color:#080">MATCH:</strong> {{name}}: {{score}}<br/>
+	{% endfor %}
+
+	{% for genra,rank in user.genraRankings %}
+		<strong style="color:#800">RANK:</strong> {{genra}}: {{rank}}<br/>
+	{% endfor %}
+
+{% endblock %}		

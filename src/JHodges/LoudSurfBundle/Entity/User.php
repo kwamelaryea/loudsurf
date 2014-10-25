@@ -25,6 +25,20 @@ class User extends BaseUser
      */
     protected $favSongs;
 
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="genra_rankings", type="json_array")
+     */
+    protected $genraRankings=array();
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="user_matches", type="json_array")
+     */
+    protected $userMatches=array();
+
     public function __construct()
     {
         parent::__construct();
@@ -73,5 +87,80 @@ class User extends BaseUser
     public function getFavSongs()
     {
         return $this->favSongs;
+    }
+
+    /**
+     * Set genraRankings
+     *
+     * @param array $genraRankings
+     * @return User
+     */
+    public function setGenraRankings($genraRankings)
+    {
+        $this->genraRankings = $genraRankings;
+
+        return $this;
+    }
+
+    /**
+     * Get genraRankings
+     *
+     * @return array 
+     */
+    public function getGenraRankings()
+    {
+        return $this->genraRankings;
+    }
+
+    /**
+     * Set genraRanking
+     *
+     * @param string $genraRanking
+     * @param integer $value
+     * @return User
+     */
+    public function setGenraRanking($index,$value){
+        $this->genraRankings[$index] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get genraRankings
+     *
+     * @param string $genraRanking     
+     * @return integer 
+     */
+    public function getGenraRanking($index){
+        if(isset($this->genraRankings[$index])){
+            return $this->genraRankings[$index];
+        }else{
+            return 0;
+        }
+    }
+
+
+
+    /**
+     * Set userMatches
+     *
+     * @param array $userMatches
+     * @return User
+     */
+    public function setUserMatches($userMatches)
+    {
+        $this->userMatches = $userMatches;
+
+        return $this;
+    }
+
+    /**
+     * Get userMatches
+     *
+     * @return array 
+     */
+    public function getUserMatches()
+    {
+        return $this->userMatches;
     }
 }

@@ -7,7 +7,7 @@
 	        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
 	        <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
 	        |
-	        <a href="{{ path('test') }}">Algo Test</a>
+	        <a href="{{ path('users') }}">User List</a>
 	        |
 	        <a href="{{ path('favs') }}">My Favs</a>
 	    {% else %}

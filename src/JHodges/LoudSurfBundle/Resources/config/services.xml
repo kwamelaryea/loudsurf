@@ -23,7 +23,11 @@
             <argument type="service" id="winzou_cache.file" />            
             <argument>%echonest.api_key%</argument>
         </service>
-    </services>
 
+        <service id="jhodges.loudsurf.algorithm" class="JHodges\LoudSurfBundle\Service\AlgorithmService">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="jhodges.echonest"/>
+        </service>
+    </services>
 
 </container>
