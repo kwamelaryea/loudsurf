@@ -2,26 +2,40 @@
 
 {% block body %}
 
-	<h2>{{user.username}} (GPa={{user.genrePoints}})</h2>
-	{% for song in user.favsongs %}
-		<a href="{{url('song',{id:song.songId})}}">{{song.name}}</a><br/>
-	{% endfor %}
+	<h2>{{user.username}}</h2>
 
-	{% for match in matches %}
-		<strong style="color:#080">MATCH:</strong>
-		<strong>{{match.score_per|number_format}}%</strong>
-		<a href="{{url('user',{username:match.user.username})}}">{{match.user.username}}</a>
-		<small>
-			(S={{match.score}} 
-			Sa={{match.score_per_a|number_format}}% 
-			Sb={{match.score_per_b|number_format}}% 
-			GPb={{match.user.genrePoints}})
-		</small>
-		<br/>
-	{% endfor %}
+	<div class="row">
+		<div class="col-md-4">
+			<h3>Fav Songs</h3>
+			{% for song in user.favsongs %}
+				<a href="{{url('song',{id:song.songId})}}">{{song.name}}</a><br/>
+			{% endfor %}
+		</div>
 
-	{% for genra,rank in user.genreRankings %}
-		<strong style="color:#800">RANK:</strong> {{genra}}: {{rank}}<br/>
-	{% endfor %}
+		<div class="col-md-4">
+			<h3>User Matches</h3>
+			{% for match in matches %}
+				<strong>{{match.score_per|number_format}}%</strong>
+				<a href="{{url('user',{username:match.user.username})}}">{{match.user.username}}</a>
+				<small>
+					(S={{match.score}} 
+					Sa={{match.score_per_a|number_format}}% 
+					Sb={{match.score_per_b|number_format}}% 
+					GPb={{match.user.genrePoints}})
+				</small>
+				<br/>
+			{% endfor %}
+		</div>
+
+		<div class="col-md-4">
+			<h3>Genra Points ({{user.genrePoints}})</h3>
+			{% for genre,rank in user.genreRankings %}
+				<strong>{{rank}}</strong>
+				{{genre}}
+				<br/>
+			{% endfor %}
+		</div>
+
+	</div>
 
 {% endblock %}		

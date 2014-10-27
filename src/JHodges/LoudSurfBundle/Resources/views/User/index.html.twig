@@ -2,10 +2,18 @@
 
 {% block body %}
 
-	<ul>
-		{% for user in users %}
-		  <li><a href="{{url('user',{username:user.username})}}">{{user.username}}</a></li>
-		{% endfor %}
-	</ul>
+	<style>
+		.user{
+			float:left;
+			width:200px;
+			margin:1px;
+			padding:2px;
+			background-color:#ddd;
+		}
+	</style>
+
+	{% for user in users %}
+	  <p class="user"><a href="{{url('user',{username:user.username})}}">{{user.username}}</a> <small>(GP={{user.genrePoints}})</small></p>
+	{% endfor %}
 
 {% endblock %}	
