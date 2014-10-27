@@ -45,25 +45,38 @@ class AlgorithmService{
 
     public function calculateUserMatches(User $user){
 
+        //array to store users who also like our genres
+        //and a sort index for ordering all matches at the end
         $matches=array();
+        $sort_index=array();
 
+        //fetch and loop through all users
         $users=$this->em->getRepository('JHodgesLoudSurfBundle:User')->findAll();
         foreach($users as $user2){
+            //keep score
+            $score=0;
+            //if this user is not us
             if( $user->getId()!=$user2->getId() ){
+                //loop through our genre ranks
                 foreach($user->getGenreRankings() as $k=>$v){
+                    //see if the other user likes the same genre
                     if( $user2->getGenreRanking($k) ){
-                        $score=min( $user->getGenreRanking($k) , $user2->getGenreRanking($k) );
-                        if(isset($matches[$user2->getUsername()])){
-                            $matches[$user2->getUsername()]+=$score;
-                        }else{
-                            $matches[$user2->getUsername()]=$score;
-                        }
+                        //we like the same genre so increment score
+                        $score+=min( $user->getGenreRanking($k) , $user2->getGenreRanking($k) );
                     }
+                }
+                //genre comparison finished, did we score?
+                if($score){
+                    //score! so save the results
+                    $matches[]=array('user'=>$user2,'score'=>$score);
+                    //keep a sort index for sorting by later
+                    $sort_index[]=$score;
                 }
             }
         }
 
-        arsort($matches);
+        //sort and return matches
+        array_multisort($sort_index,SORT_DESC,$matches);
         return $matches;
     }
 

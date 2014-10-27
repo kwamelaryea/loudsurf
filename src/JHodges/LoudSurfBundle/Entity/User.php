@@ -132,4 +132,17 @@ class User extends BaseUser
         }
     }
 
+    /**
+     * Get genre points
+     *
+     * @return integer 
+     */
+    public function getGenrePoints(){
+        $points=0;
+        foreach($this->genreRankings as $genre=>$score){
+            $points+=$score;
+        }
+        return $points;
+    }
+
 }
