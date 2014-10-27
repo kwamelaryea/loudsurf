@@ -6,14 +6,14 @@
 
 	<div class="row">
 		<div class="col-md-4">
-			<h3>Fav Songs</h3>
+			<h3>Fav Songs <small>({{user.favsongs|length}})</small></h3>
 			{% for song in user.favsongs %}
 				<a href="{{url('song',{id:song.songId})}}">{{song.name}}</a><br/>
 			{% endfor %}
 		</div>
 
 		<div class="col-md-4">
-			<h3>User Matches</h3>
+			<h3>User Matches <small>({{matches|length}})</small></h3>
 			{% for match in matches %}
 				<strong>{{match.score_per|number_format}}%</strong>
 				<a href="{{url('user',{username:match.user.username})}}">{{match.user.username}}</a>
@@ -28,7 +28,7 @@
 		</div>
 
 		<div class="col-md-4">
-			<h3>Genra Points ({{user.genrePoints}})</h3>
+			<h3>Genre Points <small>({{user.genrePoints}} in {{user.genreRankings|length}} genres)</small></h3>
 			{% for genre,rank in user.genreRankings %}
 				<strong>{{rank}}</strong>
 				{{genre}}
