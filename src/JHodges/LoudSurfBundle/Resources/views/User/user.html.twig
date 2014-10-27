@@ -9,9 +9,15 @@
 
 	{% for match in matches %}
 		<strong style="color:#080">MATCH:</strong>
-		<strong>{{(match.score/user.genrePoints*100)|number_format(1)}}%</strong>
+		<strong>{{match.score_per|number_format}}%</strong>
 		<a href="{{url('user',{username:match.user.username})}}">{{match.user.username}}</a>
-		<small>(S={{match.score}} GPb={{match.user.genrePoints}})</small><br/>
+		<small>
+			(S={{match.score}} 
+			Sa={{match.score_per_a|number_format}}% 
+			Sb={{match.score_per_b|number_format}}% 
+			GPb={{match.user.genrePoints}})
+		</small>
+		<br/>
 	{% endfor %}
 
 	{% for genra,rank in user.genreRankings %}

@@ -53,24 +53,25 @@ class AlgorithmService{
         //fetch and loop through all users
         $users=$this->em->getRepository('JHodgesLoudSurfBundle:User')->findAll();
         foreach($users as $user2){
-            //keep score
-            $score=0;
             //if this user is not us
             if( $user->getId()!=$user2->getId() ){
-                //loop through our genre ranks
-                foreach($user->getGenreRankings() as $k=>$v){
-                    //see if the other user likes the same genre
-                    if( $user2->getGenreRanking($k) ){
-                        //we like the same genre so increment score
-                        $score+=min( $user->getGenreRanking($k) , $user2->getGenreRanking($k) );
-                    }
-                }
                 //genre comparison finished, did we score?
-                if($score){
-                    //score! so save the results
-                    $matches[]=array('user'=>$user2,'score'=>$score);
+                if($score=$this->calculateUserMatch($user,$user2)){
+                    //score! so save the results and calculate scoreback value
+
+                    $score_per_a=$score/$user->getGenrePoints()*100;
+                    $score_per_b=$score/$user2->getGenrePoints()*100;
+                    $score_per=($score_per_a+$score_per_b)/2;
+
+                    $matches[]=array(
+                        'user'=>$user2,
+                        'score'=>$score,
+                        'score_per'=>$score_per,
+                        'score_per_a'=>$score_per_a,
+                        'score_per_b'=>$score_per_b
+                    );
                     //keep a sort index for sorting by later
-                    $sort_index[]=$score;
+                    $sort_index[]=$score_per;
                 }
             }
         }
@@ -78,6 +79,19 @@ class AlgorithmService{
         //sort and return matches
         array_multisort($sort_index,SORT_DESC,$matches);
         return $matches;
+    }
+
+    private function calculateUserMatch(User $user1, User $user2){
+        $score=0;
+        //loop through our genre ranks
+        foreach($user1->getGenreRankings() as $k=>$v){
+            //see if the other user likes the same genre
+            if( $user2->getGenreRanking($k) ){
+                //we like the same genre so increment score
+                $score+=min( $user1->getGenreRanking($k) , $user2->getGenreRanking($k) );
+            }
+        }
+        return $score;
     }
 
 
