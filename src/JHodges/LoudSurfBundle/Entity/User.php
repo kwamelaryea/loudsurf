@@ -28,16 +28,9 @@ class User extends BaseUser
     /**
      * @var array
      *
-     * @ORM\Column(name="genra_rankings", type="json_array")
+     * @ORM\Column(name="genre_rankings", type="json_array")
      */
-    protected $genraRankings=array();
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="user_matches", type="json_array")
-     */
-    protected $userMatches=array();
+    protected $genreRankings=array();
 
     public function __construct()
     {
@@ -90,77 +83,53 @@ class User extends BaseUser
     }
 
     /**
-     * Set genraRankings
+     * Set genreRankings
      *
-     * @param array $genraRankings
+     * @param array $genreRankings
      * @return User
      */
-    public function setGenraRankings($genraRankings)
+    public function setGenreRankings($genreRankings)
     {
-        $this->genraRankings = $genraRankings;
+        $this->genreRankings = $genreRankings;
 
         return $this;
     }
 
     /**
-     * Get genraRankings
+     * Get genreRankings
      *
      * @return array 
      */
-    public function getGenraRankings()
+    public function getGenreRankings()
     {
-        return $this->genraRankings;
+        return $this->genreRankings;
     }
 
     /**
-     * Set genraRanking
+     * Set genreRanking
      *
-     * @param string $genraRanking
+     * @param string $genreRanking
      * @param integer $value
      * @return User
      */
-    public function setGenraRanking($index,$value){
-        $this->genraRankings[$index] = $value;
+    public function setGenreRanking($index,$value){
+        $this->genreRankings[$index] = $value;
 
         return $this;
     }
 
     /**
-     * Get genraRankings
+     * Get genreRankings
      *
-     * @param string $genraRanking     
+     * @param string $genreRanking     
      * @return integer 
      */
-    public function getGenraRanking($index){
-        if(isset($this->genraRankings[$index])){
-            return $this->genraRankings[$index];
+    public function getGenreRanking($index){
+        if(isset($this->genreRankings[$index])){
+            return $this->genreRankings[$index];
         }else{
             return 0;
         }
     }
 
-
-
-    /**
-     * Set userMatches
-     *
-     * @param array $userMatches
-     * @return User
-     */
-    public function setUserMatches($userMatches)
-    {
-        $this->userMatches = $userMatches;
-
-        return $this;
-    }
-
-    /**
-     * Get userMatches
-     *
-     * @return array 
-     */
-    public function getUserMatches()
-    {
-        return $this->userMatches;
-    }
 }

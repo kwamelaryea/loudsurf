@@ -31,6 +31,7 @@ class DefaultController extends Controller{
 
 		$results = $en->query('song', 'search', array(
 		    'combined' => $q,
+            'sort' => 'song_hotttnesss-desc',
             'bucket'=>array('id:7digital-US','audio_summary','tracks')
 		));
 
@@ -62,30 +63,5 @@ class DefaultController extends Controller{
             'song'=>$en->getSongProfile($id)
         );
     }
-
-    /**
-     * @Route("/recalc/", name="recalc")
-     * @Template()
-     */
-    public function recalcAction(Request $request){
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery(
-            'SELECT u
-            FROM JHodgesLoudSurfBundle:User u
-        ');
-        $users = $query->getResult();
-
-        //recalculate rankings
-        foreach($users as $user){
-            $this->get('jhodges.loudsurf.algorithm')->calculateGenraRankings($user);
-            $this->get('jhodges.loudsurf.algorithm')->calculateUserMatches($user);
-            $em->persist($user);
-        }
-
-        $em->flush();
-
-        die("DONE");
-    }
-
 
 }

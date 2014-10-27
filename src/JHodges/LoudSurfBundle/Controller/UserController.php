@@ -27,6 +27,9 @@ class UserController extends Controller{
     public function userAction($username){
         $em = $this->getDoctrine()->getManager();
         $user=$em->getRepository('JHodgesLoudSurfBundle:User')->findOneBy(array('username'=>$username));
-        return array('user'=>$user);
+
+        $matches=$this->get('jhodges.loudsurf.algorithm')->calculateUserMatches($user);
+
+        return array('user'=>$user,'matches'=>$matches);
     }
 }

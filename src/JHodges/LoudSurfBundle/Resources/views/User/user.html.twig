@@ -7,11 +7,11 @@
 		<a href="{{url('song',{id:song.songId})}}">{{song.name}}</a><br/>
 	{% endfor %}
 
-	{% for name,score in user.userMatches %}
+	{% for name,score in matches %}
 		<strong style="color:#080">MATCH:</strong> {{name}}: {{score}}<br/>
 	{% endfor %}
 
-	{% for genra,rank in user.genraRankings %}
+	{% for genra,rank in user.genreRankings %}
 		<strong style="color:#800">RANK:</strong> {{genra}}: {{rank}}<br/>
 	{% endfor %}
 
