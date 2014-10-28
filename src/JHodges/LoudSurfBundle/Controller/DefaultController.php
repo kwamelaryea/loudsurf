@@ -73,6 +73,8 @@ class DefaultController extends Controller{
      */
     public function matchesAction(Request $request){
 
+	set_time_limit(600);
+
         $en=$this->get('jhodges.echonest');
         $algo=$this->get('jhodges.loudsurf.algorithm');
         $em = $this->get('doctrine')->getManager();

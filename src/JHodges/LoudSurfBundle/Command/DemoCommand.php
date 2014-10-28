@@ -22,7 +22,7 @@ class DemoCommand extends ContainerAwareCommand{
     protected function execute(InputInterface $input, OutputInterface $output){
         $username = $input->getArgument('username');
         if(!$count = $input->getArgument('count')){
-            $count=rand(10,100);
+            $count=rand(1,80);
         }
 
         $en=$this->getContainer()->get('jhodges.echonest');
@@ -46,7 +46,7 @@ class DemoCommand extends ContainerAwareCommand{
         ));
 
         foreach($results->response->songs as $song){
-            sleep(10);
+            sleep(8);
             $algo->addFav($user,$song->id,$song->artist_name.' - '.$song->title);
             echo "Added {$song->artist_name} - {$song->title}\n";
         }
