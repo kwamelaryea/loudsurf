@@ -64,4 +64,38 @@ class DefaultController extends Controller{
         );
     }
 
+    /**
+     * @Route("/top/", name="top")
+     * @Template()
+     */
+    public function topAction(Request $request){
+
+        $en=$this->get('jhodges.echonest');
+        $algo=$this->get('jhodges.loudsurf.algorithm');
+        $em = $this->get('doctrine')->getManager();
+
+        $allMatches=array();
+        $sortIndex=array();
+
+        $users=$em->getRepository('JHodgesLoudSurfBundle:User')->findAll();
+        foreach($users as $user){
+            $matches=$algo->calculateUserMatches($user);
+            foreach($matches as $match){
+                if($user->getId() > $match['user']->getId()){
+                    $allMatches[]=array(
+                        'user'=>$user,
+                        'match'=>$match
+                    );
+                    $sortIndex[]=$match['score_per'];
+                }
+            }
+        }
+
+        array_multisort($sortIndex,SORT_DESC,$allMatches);
+
+        return array(
+            'matches'=>$allMatches
+        );
+    }
+
 }

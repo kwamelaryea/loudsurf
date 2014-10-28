@@ -1,0 +1,17 @@
+{% extends 'JHodgesLoudSurfBundle::layout.html.twig' %}
+
+{% block body %}
+	<h1>
+		Top User Matches
+	</h1>
+
+	{% for match in matches %}
+		<p>
+			{{match.match.score_per|number_format(1)}}% - 
+			<a href="{{url('user',{'username':match.user.username})}}">{{match.user.username}}</a>
+			&
+			<a href="{{url('user',{'username':match.match.user.username})}}">{{match.match.user.username}}</a>
+		</p>
+	{% endfor %}
+
+{% endblock %}

@@ -20,7 +20,7 @@ class EchoNestManager{
 
         $result=Echonest::query($name,$method,$data);
         if($result->response->status->message!='Success'){
-            die('UNGRACEFUL API ERROR: '.$result->response->status->message);
+            die('UNGRACEFUL API ERROR: '.$result->response->status->message."\n");
         }
         $this->cache->save($id,$result);
         return $result;

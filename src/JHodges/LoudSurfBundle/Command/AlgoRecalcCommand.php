@@ -7,29 +7,32 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class AlgoCommand extends ContainerAwareCommand{
+class AlgoRecalcCommand extends ContainerAwareCommand{
     
     protected function configure(){
         $this
-            ->setName('loudsurf:algo:calc')
-            ->setDescription('Run algo calculations')
-            ->addArgument('username', InputArgument::OPTIONAL, 'User name?')
+            ->setName('loudsurf:algo:recalc')
+            ->setDescription('Run algo genre ranking calculations')
+            ->addArgument('username', InputArgument::OPTIONAL, 'Username')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output){
 
-        $en=$this->getContainer()->get('jhodges.echonest');
         $userManager = $this->getContainer()->get('fos_user.user_manager');
         $algo=$this->getContainer()->get('jhodges.loudsurf.algorithm');
+        $em = $this->getContainer()->get('doctrine')->getManager();
 
         if( $username = $input->getArgument('username') ){
             $user=$userManager->findUserByUsername($username);
+            $algo->calculateGenreRankings($user);
         }else{
-            die("TODO\n");
+            $users=$em->getRepository('JHodgesLoudSurfBundle:User')->findAll();
+            foreach($users as $user){
+                $algo->calculateGenreRankings($user);
+            }
         }
 
-        $algo->calculateGenreRankings($user);
     }
 
 }
