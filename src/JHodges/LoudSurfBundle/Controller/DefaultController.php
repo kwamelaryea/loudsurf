@@ -65,10 +65,13 @@ class DefaultController extends Controller{
     }
 
     /**
-     * @Route("/top/", name="top")
+     * @Route("/matches/", name="matches")
      * @Template()
+     *
+     * NOTE: This is a dev action only. Will take a long time to process with many users. 
+     *
      */
-    public function topAction(Request $request){
+    public function matchesAction(Request $request){
 
         $en=$this->get('jhodges.echonest');
         $algo=$this->get('jhodges.loudsurf.algorithm');
